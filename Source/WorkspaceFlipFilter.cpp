@@ -61,6 +61,15 @@ WorkspaceFlipFilter::Filter(BMessage* message, BList* /*outlist*/)
 	if (message->what != B_MOUSE_MOVED)
 		return B_DISPATCH_MESSAGE;
 
+	// don't flip workspaces while the mouse is down
+	int32 buttons;
+	if (message->FindInt32("buttons", &buttons) == B_OK) {
+		if (buttons != 0) {
+			fThresholdCounter = 0;
+			return B_DISPATCH_MESSAGE;
+		}
+	}
+
 	BPoint point;
 	message->FindPoint("where", &point);
 
