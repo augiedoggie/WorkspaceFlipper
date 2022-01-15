@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(FLIPPER)
+project(WorkspaceFlipper)
 
-set(CMAKE_MODULE_PATH "${FLIPPER_SOURCE_DIR}/CMakeModules")
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules")
 
 include(UseHaiku)
 

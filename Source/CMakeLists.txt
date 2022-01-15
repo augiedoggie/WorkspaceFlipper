@@ -3,7 +3,7 @@ haiku_add_addon(FlipperInputFilter WorkspaceFlipFilter.cpp)
 
 target_link_libraries(FlipperInputFilter be)
 
-#set(LIBRARY_OUTPUT_PATH ${FLIPPER_BINARY_DIR})
+#set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
 execute_process(
 	COMMAND finddir B_USER_NONPACKAGED_ADDONS_DIRECTORY
@@ -28,4 +28,4 @@ install(TARGETS WorkspaceFlipper RUNTIME DESTINATION apps)
 #TODO switch to preferences when building a package?
 #install(TARGETS WorkspaceFlipper RUNTIME DESTINATION preferences)
 
-#set_property(TARGET WorkspaceFlipper PROPERTY RUNTIME_OUTPUT_DIRECTORY ${FLIPPER_BINARY_DIR})
+#set_property(TARGET WorkspaceFlipper PROPERTY RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
