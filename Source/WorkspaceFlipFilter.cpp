@@ -65,8 +65,10 @@ WorkspaceFlipFilter::Filter(BMessage* message, BList* /*outlist*/)
 	message->FindPoint("where", &point);
 
 	int32 inactiveHeight = fActiveAreaHeight == 100 ? 0 : (fScreenFrame.Height() - (fScreenFrame.Height()*fActiveAreaHeight/100))/2;
-	if (point.y <= fScreenFrame.top + inactiveHeight || point.y >= fScreenFrame.bottom - inactiveHeight)
+	if (point.y <= fScreenFrame.top + inactiveHeight || point.y >= fScreenFrame.bottom - inactiveHeight) {
+		fThresholdCounter = 0;
 		return B_DISPATCH_MESSAGE;
+	}
 
 	if (point.x <= fScreenFrame.left + fActiveAreaWidth) {
 		fThresholdCounter++;
