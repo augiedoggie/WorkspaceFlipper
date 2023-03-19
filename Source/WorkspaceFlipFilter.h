@@ -5,10 +5,10 @@
 #define _WORKSPACEFLIPFILTER_H_
 
 #include <InputServerFilter.h>
-#include <Looper.h>
+#include <Handler.h>
 
 
-class WorkspaceFlipFilter : public BInputServerFilter, BLooper {
+class WorkspaceFlipFilter : public BInputServerFilter, BHandler {
 
 public:
 							WorkspaceFlipFilter();
@@ -22,6 +22,7 @@ private:
 			void			_Flip(int32 workspaceOffset);
 			void			_LoadSettings();
 
+			BLooper*		fNodeWatchLooper;
 			BRect			fScreenFrame;
 			float			fActiveAreaHeight;
 			float			fActiveAreaWidth;

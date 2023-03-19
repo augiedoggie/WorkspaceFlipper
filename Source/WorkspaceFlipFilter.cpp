@@ -8,6 +8,7 @@
 #include <File.h>
 #include <FindDirectory.h>
 #include <InterfaceDefs.h>
+#include <Looper.h>
 #include <NodeMonitor.h>
 #include <Path.h>
 #include <Screen.h>
@@ -18,20 +19,25 @@
 WorkspaceFlipFilter::WorkspaceFlipFilter()
 	:
 	BInputServerFilter(),
-	BLooper(),
+	BHandler(),
+	fNodeWatchLooper(new BLooper()),
 	fScreenFrame(BScreen().Frame()),
 	fMouseJumpMargin(kDefaultMouseJumpMargin),
 	fThresholdCounter(0)
 {
 	_LoadSettings();
-	Run();
+	fNodeWatchLooper->AddHandler(this);
+	fNodeWatchLooper->SetPreferredHandler(this);
+	fNodeWatchLooper->Run();
 }
 
 
 WorkspaceFlipFilter::~WorkspaceFlipFilter()
 {
 	syslog(LOG_INFO, "WorkspaceFlipFilter::~WorkspaceFlipFilter()");
-	stop_watching(this);
+	stop_watching(NULL, fNodeWatchLooper);
+	LockLooper();
+	fNodeWatchLooper->Quit();
 }
 
 
@@ -122,10 +128,10 @@ WorkspaceFlipFilter::_LoadSettings()
 		if (settingsFile.SetTo(settingsPath.Path(), B_READ_ONLY | B_CREATE_FILE) == B_OK)
 			settingsMessage.Unflatten(&settingsFile);
 
-		stop_watching(this);
+		stop_watching(NULL, fNodeWatchLooper);
 		node_ref ref;
 		settingsFile.GetNodeRef(&ref);
-		if (watch_node(&ref, B_WATCH_ALL, NULL, this) != B_OK)
+		if (watch_node(&ref, B_WATCH_ALL, NULL, fNodeWatchLooper) != B_OK)
 			syslog(LOG_ERR, "WorkspaceFlipFilter: Unable to start node monitoring");
 	}
 
