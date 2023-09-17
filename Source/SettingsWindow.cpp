@@ -43,7 +43,7 @@ const char* kHeightPostfixString = "%";
 SettingsWindow::SettingsWindow()
 	:
 	BWindow(BRect(150, 150, 900, 450), "Workspace Flipper Settings", B_TITLED_WINDOW,
-			B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE | B_AUTO_UPDATE_SIZE_LIMITS | B_CLOSE_ON_ESCAPE),
+		B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE | B_AUTO_UPDATE_SIZE_LIMITS | B_CLOSE_ON_ESCAPE),
 	fPreview(new ZonePreview(kDefaultActiveWidth, kDefaultActiveHeight))
 {
 	fPreview->SetExplicitMinSize(BSize(kPreviewMinWidth, B_SIZE_UNSET));
@@ -75,6 +75,7 @@ SettingsWindow::SettingsWindow()
 
 	_LoadSettings();
 
+	// clang-format off
 	BLayoutBuilder::Group<>(this, B_HORIZONTAL, 1)
 		.Add(previewBBox)
 		.AddGroup(B_VERTICAL)
@@ -92,6 +93,7 @@ SettingsWindow::SettingsWindow()
 			.SetInsets(5)
 		.End()
 		.SetInsets(5);
+	// clang-format on
 }
 
 
@@ -141,7 +143,7 @@ SettingsWindow::_LoadSettings(bool useDefaults)
 			(new BAlert("Settings Error", "Error locating settings directory", "OK", NULL, NULL, B_WIDTH_AS_USUAL, B_EVEN_SPACING, B_WARNING_ALERT))->Go();
 	}
 
-	fActivitySlider->SetValue(settingsMessage.GetInt32(kSettingsThresholdKey, kDefaultActivityThreshold)/kActivitySliderStep);
+	fActivitySlider->SetValue(settingsMessage.GetInt32(kSettingsThresholdKey, kDefaultActivityThreshold) / kActivitySliderStep);
 	fWidthSlider->SetValue(settingsMessage.GetInt32(kSettingsWidthKey, kDefaultActiveWidth));
 	fHeightSlider->SetValue(settingsMessage.GetInt32(kSettingsHeightKey, kDefaultActiveHeight));
 
@@ -170,7 +172,7 @@ SettingsWindow::_SaveSettings()
 	}
 
 	BMessage settingsMessage;
-	settingsMessage.AddInt32(kSettingsThresholdKey, fActivitySlider->Value()*kActivitySliderStep);
+	settingsMessage.AddInt32(kSettingsThresholdKey, fActivitySlider->Value() * kActivitySliderStep);
 	settingsMessage.AddInt32(kSettingsWidthKey, fWidthSlider->Value());
 	settingsMessage.AddInt32(kSettingsHeightKey, fHeightSlider->Value());
 	if (settingsMessage.Flatten(&settingsFile) != B_OK)

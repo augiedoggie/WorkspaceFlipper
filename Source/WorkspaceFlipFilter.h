@@ -4,8 +4,8 @@
 #ifndef _WORKSPACEFLIPFILTER_H_
 #define _WORKSPACEFLIPFILTER_H_
 
-#include <InputServerFilter.h>
 #include <Handler.h>
+#include <InputServerFilter.h>
 
 
 class WorkspaceFlipFilter : public BInputServerFilter, BHandler {

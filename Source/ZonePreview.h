@@ -4,8 +4,8 @@
 #ifndef _ZONEPREVIEW_H_
 #define _ZONEPREVIEW_H_
 
-#include <View.h>
 #include <Region.h>
+#include <View.h>
 
 
 class BBitmap;

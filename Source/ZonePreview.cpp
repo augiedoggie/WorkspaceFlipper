@@ -37,8 +37,8 @@ ZonePreview::~ZonePreview()
 void
 ZonePreview::Draw(BRect updateRect)
 {
-	float aspectRatio = fScreenFrame.Width()/fScreenFrame.Height();
-	BRect viewRect(0, 0, Bounds().Width(), Bounds().Width()/aspectRatio);
+	float aspectRatio = fScreenFrame.Width() / fScreenFrame.Height();
+	BRect viewRect(0, 0, Bounds().Width(), Bounds().Width() / aspectRatio);
 	if (viewRect.Height() > Bounds().Height())
 		viewRect.Set(0, 0, Bounds().Height() * aspectRatio, Bounds().Height());
 
@@ -49,7 +49,7 @@ ZonePreview::Draw(BRect updateRect)
 		DrawBitmap(fScreenBitmap, viewRect);
 
 	SetHighColor(255, 0, 0);
-	float scale = viewRect.Width()/fScreenFrame.Width();
+	float scale = viewRect.Width() / fScreenFrame.Width();
 
 	//TODO BRegion::ScaleBy() seems to be broken
 	//BRegion scaleRegion(fActiveRegion);
@@ -58,9 +58,9 @@ ZonePreview::Draw(BRect updateRect)
 	//fActiveRegion.PrintToStream();
 
 	BRect one(fActiveRegion.RectAt(0));
-	FillRect(BRect(one.left*scale, one.top*scale, (one.right*scale), one.bottom*scale));
+	FillRect(BRect(one.left * scale, one.top * scale, one.right * scale, one.bottom * scale));
 	one = BRect(fActiveRegion.RectAt(1));
-	FillRect(BRect(one.left*scale, one.top*scale, one.right*scale, one.bottom*scale));
+	FillRect(BRect(one.left * scale, one.top * scale, one.right * scale, one.bottom * scale));
 
 	BView::Draw(updateRect);
 }
@@ -90,9 +90,9 @@ ZonePreview::HasHeightForWidth()
 void
 ZonePreview::UpdateDimensions(int32 activeWidth, int32 activeHeight)
 {
-	float safeHeight = (fScreenFrame.Height()-(fScreenFrame.Height()*activeHeight/100))/2;
+	float safeHeight = (fScreenFrame.Height() - (fScreenFrame.Height() * activeHeight / 100)) / 2;
 	fActiveRegion.MakeEmpty();
-	fActiveRegion.Include(BRect(0, safeHeight, activeWidth, fScreenFrame.bottom-safeHeight));
-	fActiveRegion.Include(BRect(fScreenFrame.right-activeWidth, safeHeight, fScreenFrame.right, fScreenFrame.bottom-safeHeight));
+	fActiveRegion.Include(BRect(0, safeHeight, activeWidth, fScreenFrame.bottom - safeHeight));
+	fActiveRegion.Include(BRect(fScreenFrame.right - activeWidth, safeHeight, fScreenFrame.right, fScreenFrame.bottom - safeHeight));
 	Invalidate();
 }

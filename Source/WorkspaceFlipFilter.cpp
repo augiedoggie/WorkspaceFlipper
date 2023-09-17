@@ -2,7 +2,6 @@
 // SPDX-FileCopyrightText: 2021 Chris Roberts
 
 #include "WorkspaceFlipFilter.h"
-
 #include "Defaults.h"
 
 #include <File.h>
@@ -12,7 +11,6 @@
 #include <NodeMonitor.h>
 #include <Path.h>
 #include <Screen.h>
-
 #include <syslog.h>
 
 
@@ -49,7 +47,7 @@ WorkspaceFlipFilter::InitCheck()
 
 
 void
-WorkspaceFlipFilter::MessageReceived(BMessage *message)
+WorkspaceFlipFilter::MessageReceived(BMessage* message)
 {
 	switch(message->what) {
 		case B_NODE_MONITOR:
@@ -79,7 +77,7 @@ WorkspaceFlipFilter::Filter(BMessage* message, BList* /*outlist*/)
 	BPoint point;
 	message->FindPoint("where", &point);
 
-	int32 inactiveHeight = fActiveAreaHeight == 100 ? 0 : (fScreenFrame.Height() - (fScreenFrame.Height()*fActiveAreaHeight/100))/2;
+	int32 inactiveHeight = fActiveAreaHeight == 100 ? 0 : (fScreenFrame.Height() - (fScreenFrame.Height() * fActiveAreaHeight / 100)) / 2;
 	if (point.y <= fScreenFrame.top + inactiveHeight || point.y >= fScreenFrame.bottom - inactiveHeight) {
 		fThresholdCounter = 0;
 		return B_DISPATCH_MESSAGE;
@@ -159,8 +157,8 @@ WorkspaceFlipFilter::_Flip(int32 workspaceOffset)
 }
 
 
-extern "C"
-BInputServerFilter* instantiate_input_filter()
+extern "C" BInputServerFilter*
+instantiate_input_filter()
 {
 	syslog(LOG_INFO, "WorkspaceFlipFilter::instantiate_input_filter()");
 	return new (std::nothrow) WorkspaceFlipFilter();

@@ -3,8 +3,8 @@
 
 #include "SettingsWindow.h"
 
-#include <Application.h>
 #include <Alert.h>
+#include <Application.h>
 
 
 class SettingsApp : public BApplication {
